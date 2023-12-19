@@ -72,7 +72,7 @@ public:
         //  ask for quantity to add
         //  adds quantity to count
         count += itemsAdded;
-        cout << "There are now " << count << " products.";
+        cout << "\nThere are now " << count << " products of [" << name << "]. \n \n";
     }
 
     void addItem(){
@@ -85,12 +85,12 @@ public:
         //cin.sync();
 
         cin.ignore(); //clears input buffer to make getline work properly
-        cout << "Please Enter Name: ";
+        cout << "\nPlease Enter Name: ";
         getline(cin, newName);
 
         //
         do{
-            cout << "\nPlease Enter Price: ";
+            cout << "Please Enter Price: ";
             cin >> newPrice;
             if (newPrice <=0){
                 cout << "Wrong Input...\n";
@@ -107,7 +107,7 @@ public:
         }
         while(newCount <=0);
 
-        cout << "\nPlease Enter Outlet Name: ";
+        cout << "Please Enter Outlet Name: ";
         cin >> newOutlet;
 
         cout << "Product Added Successfully! \n \n \n";
@@ -153,7 +153,7 @@ public:
             if(choice == 1){
                 displayItemsList();
                 int itemNum, itemsAdded;
-                cout << "Please enter which product you would like to restock: ";
+                cout << "Please enter number of the product you would like to restock: ";
                 cin >> itemNum;
 
                 cout << "Please enter amount of items you will add: ";
@@ -168,6 +168,7 @@ public:
             }
 
             else if (choice == 3){
+                    cout <<"\n";
                     break;}
             else{
                 cout << "Wrong input...\n";
@@ -183,7 +184,7 @@ public:
     }
 
     void displayItemsList(){
-        cout << "Items list \n";
+        cout << "\n \n##########\nItems list \n__________\n";
         for(int i =0; i < items.size() ; i++){
 
             cout << i+1 <<"-"<< items[i].getName() << "   Price = " << items[i].getPrice()
@@ -197,7 +198,8 @@ public:
 
     void displayMenu(){
         //system("cls");
-        cout << "Menu: \n" ;
+        cout << "#####\nMenu: \n-----\n" ;
+
         for(int i =0; i < items.size() ; i++){
 
             cout << i+1 <<"-"<< items[i].getName() << "   Price = " << items[i].getPrice()
@@ -207,13 +209,14 @@ public:
             }
             cout << "\n";
         }
+        cout << "\n0-Programming Mode\n\n";
     }
 
 
     void operationMode(){
         displayMenu();
         int num;
-        Product product;
+
         num = SelectItemNumber();
         if(num == 0){
             int password;
@@ -221,13 +224,15 @@ public:
 
             cin >> password;
             if(password == key){
+                cout <<"\n\n";
                 programmingMode();
+
             }
             else{
                 cout << "Wrong Password...\n";
             }
         }
-
+        else if(num <= items.size() && num >0){
         moneyGrabber(num);
         dispenseItem(num);
 
@@ -236,6 +241,7 @@ public:
         //product = itemSelector(itemNumber);
         //moneyGrabber(product);
         //addItems();
+        }
     }
 
     void addProduct(Product item){
@@ -250,7 +256,7 @@ public:
     int SelectItemNumber(){
         int outletNumber;
         do{
-        cout << "please enter number of outlet: ";
+        cout << "Please Enter Your Choice: ";
         cin >> outletNumber;
 
         if(outletNumber == 0){
@@ -275,26 +281,32 @@ public:
     void moneyGrabber(int outletNumber){
         bool moneySuccessFlag = false;
         float money;
+        float moneyStored = 0.0;
 
         while(moneySuccessFlag != true){
 
 
             cout << "Please enter your money: ";
             cin >> money;
-            if(cin.fail()){
+
+            if(cin.fail() || money <0){
                 cout << "Wrong Input...\n";
                 break;
 
             }
-            if (money >= items[outletNumber-1].getPrice()){//item[outletNumber].price){
+            moneyStored += money;
 
-                returnChange(money, outletNumber);
+            if (moneyStored >= items[outletNumber-1].getPrice()){
+
+                returnChange(moneyStored, outletNumber);
 
                 moneySuccessFlag = true;
 
             }
-            else if ((money < items[outletNumber-1].getPrice() && (money > 0))){
-                cout << "Please enter the right number of money\n";
+            else if (moneyStored < items[outletNumber-1].getPrice()){
+
+                cout << "Please Enter " << (items[outletNumber-1].getPrice()-moneyStored) << "$ \n";
+                //cout << "Please enter the right number of money\n";
 
             }
 
@@ -305,9 +317,9 @@ public:
 
     void returnChange(float money, int outletNumber){//, float item[outletNumber].price){
 
-        float change = money - items[outletNumber-1].getPrice();//item[outletNumber].price;
+        float change = money - items[outletNumber-1].getPrice();
 
-        cout << "your change is: " << change << "$ \n";
+        cout << "\nYour change is: " << change << "$ \n";
 
     }
 
@@ -315,24 +327,18 @@ public:
 
         cout << "Your item is [" << items[outletNumber-1].getName() << "]\n" ;
         cout << "Outlet Name: " << items[outletNumber-1].getOutlet() << " \n \n";
-
-    }
-
-    int itemSelector(){
-
-        int itemNumber;
-
-        do{
-            cout << "Please enter your choice: ";
-            cin >> itemNumber;
-            if (itemNumber <=0){
-                cout << "Wrong Input...\n";
-            }
+        string flag;
+        cout << "Press any key to close or Press 'y' to buy something else: ";
+        cin >> flag;
+        if(flag == "y"){
+            finishFlag = false;
         }
-        while(itemNumber <=0);
+        else{
+            finishFlag = true;
+        }
 
-        return itemNumber;
     }
+
 
 
 
@@ -407,7 +413,6 @@ int main()
 
     return 0;
 }*/
-
 
 
 
