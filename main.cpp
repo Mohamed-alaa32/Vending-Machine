@@ -3,14 +3,9 @@
 #include <conio.h>
 
 using namespace std;
-int itemSelector();
-void moneyGrabber();
-void returnChange(float money);
-int SelectItemNumber();
-void operationMode();
 
 class Product{
-    private:
+private:
     string name;
     float price;
     int count;
@@ -18,52 +13,52 @@ class Product{
     string outlet;
 public:
 
-    //GETTERS
+    //Constructor 1
+    Product(){
+        name = "EMPTY";
+        price = 0;
+        count = 0;
+        //expirationDate = (0,0,0)
+        outlet = "None";
+    }
+    //Constructor 2
+    Product(string inputName,float inputPrice,int inputCount, string inputOutlet){
+        name = inputName;
+        price = inputPrice;
+        count = inputCount;
+        //expirationDate = inputExpirationDate;
+        outlet = inputOutlet;
+    }
 
+    //GETTERS
     string const getName() {
         return name;
-        }
+    }
 
     float const getPrice(){
         return price;
     }
 
     int const getCount() {
-        return count;}
+        return count;
+    }
 
     string const getOutlet(){
-         return outlet;}
+        return outlet;
+    }
 
     //SETTERS
     void setName(string n){
-    name = n;
+        name = n;
     }
     void setPrice(float n){
-    price = n;
+        price = n;
     }
     void setCount(int n){
-    count = n;
+        count = n;
     }
     void setOutlet(string n){
-    outlet = n;
-    }
-    //PROGRAMMING MODE
-
-    //Constructor 1
-    Product(){
-    name = "EMPTY";
-    price = 0;
-    count = 0;
-    //expirationDate = (0,0,0)
-    outlet = "None";
-    }
-    //Constructor 2
-    Product(string inputName,float inputPrice,int inputCount, string inputOutlet){
-    name = inputName;
-    price = inputPrice;
-    count = inputCount;
-    //expirationDate = inputExpirationDate;
-    outlet = inputOutlet;
+        outlet = n;
     }
 
     //Restock
@@ -75,20 +70,17 @@ public:
         cout << "\nThere are now " << count << " products of [" << name << "]. \n \n";
     }
 
+    //Add item
     void addItem(){
         string newName,newOutlet;
         int newCount;
         float newPrice;
         Product a;
 
-        //cin.clear();
-        //cin.sync();
-
         cin.ignore(); //clears input buffer to make getline work properly
         cout << "\nPlease Enter Name: ";
         getline(cin, newName);
 
-        //
         do{
             cout << "Please Enter Price: ";
             cin >> newPrice;
@@ -115,18 +107,12 @@ public:
         setPrice(newPrice);
         setCount(newCount);
         setOutlet(newOutlet);
-
     }
-    //OPERATING MODE
+
+    //Updating count after making a successful purchase
     void oneItemTaken(){
         count -= 1;
     }
-
-
-
-
-
-
 };
 
 class VendingStorage{
@@ -134,17 +120,13 @@ private:
     vector<Product> items;
     int key = 123;
     bool finishFlag = false;
+    //Today's Date: date
 public:
-
-
-
+    //Programming Mode
     void programmingMode(){
-
         int choice;
 
         while(true){
-
-
             cout << "What do you want to do? \n";
             cout << "1.Restock \n2.Add new item \n3.Go back \n";
             cout << "Please Enter your choice: ";
@@ -158,8 +140,8 @@ public:
 
                 cout << "Please enter amount of items you will add: ";
                 cin >> itemsAdded;
-                items[itemNum -1].restockProduct(itemsAdded);
 
+                items[itemNum -1].restockProduct(itemsAdded);
             }
             else if(choice == 2){
                 Product newItem;
@@ -174,12 +156,9 @@ public:
                 cout << "Wrong input...\n";
             }
         }
-
     }
 
-
-    bool finish(){
-
+    bool getFinishFlag(){
         return finishFlag;
     }
 
@@ -196,23 +175,12 @@ public:
         }
     }
 
-    void displayMenu(){
-        //system("cls");
-        cout << "#####\nMenu: \n-----\n" ;
-
-        for(int i =0; i < items.size() ; i++){
-
-            cout << i+1 <<"-"<< items[i].getName() << "   Price = " << items[i].getPrice()
-            << "$"    ;
-            if (items[i].getCount() == 0){
-                cout << " (Sold out)";
-            }
-            cout << "\n";
-        }
-        cout << "\n0-Programming Mode\n\n";
+    //Used for manual adding of items before initializing the code
+    void addProduct(Product item){
+        items.push_back(item);
     }
 
-
+    //Operating Mode
     void operationMode(){
         displayMenu();
         int num;
@@ -244,12 +212,23 @@ public:
         }
     }
 
-    void addProduct(Product item){
-        items.push_back(item);
+    void displayMenu(){
+        //system("cls"); used to clear terminal
+        cout << "#####\nMenu: \n-----\n" ;
+
+        for(int i =0; i < items.size() ; i++){
+
+            cout << i+1 <<"-"<< items[i].getName() << "   Price = " << items[i].getPrice()
+            << "$"    ;
+            if (items[i].getCount() == 0){
+                cout << " (Sold out)";
+            }
+            cout << "\n";
+        }
+        cout << "\n0-Programming Mode\n\n";
     }
 
     int numberOfProducts(){
-
         return items.size();
     }
 
@@ -269,14 +248,11 @@ public:
         else if (items[outletNumber-1].getCount()==0){
             cout << "Out of stock...\n";
             }
-
-
         }
         while(items[outletNumber-1].getCount() == 0 || (outletNumber >numberOfProducts() ) || (outletNumber <0));
 
         return outletNumber;
     }
-
 
     void moneyGrabber(int outletNumber){
         bool moneySuccessFlag = false;
@@ -284,43 +260,32 @@ public:
         float moneyStored = 0.0;
 
         while(moneySuccessFlag != true){
-
-
             cout << "Please enter your money: ";
             cin >> money;
 
             if(cin.fail() || money <0){
                 cout << "Wrong Input...\n";
                 break;
-
             }
             moneyStored += money;
 
             if (moneyStored >= items[outletNumber-1].getPrice()){
 
                 returnChange(moneyStored, outletNumber);
-
                 moneySuccessFlag = true;
-
             }
             else if (moneyStored < items[outletNumber-1].getPrice()){
 
                 cout << "Please Enter " << (items[outletNumber-1].getPrice()-moneyStored) << "$ \n";
                 //cout << "Please enter the right number of money\n";
-
             }
-
         }
-
-}
-
+    }
 
     void returnChange(float money, int outletNumber){//, float item[outletNumber].price){
 
         float change = money - items[outletNumber-1].getPrice();
-
         cout << "\nYour change is: " << change << "$ \n";
-
     }
 
     void dispenseItem(int outletNumber){
@@ -336,11 +301,7 @@ public:
         else{
             finishFlag = true;
         }
-
     }
-
-
-
 
 };
 
@@ -350,27 +311,10 @@ public:
 
 int main()
 {
-    //int item = itemSelector();
-    //cout <<"Number of item is: " << item;
-
-    //cout << "Hello world!" << endl;
-    //operationMode();
-/*
-    vector<Product> items;
-
-    //item1 = addItem();
-
-    //item2 = items[0];
-
-
-    //items.push_back(addItem());
-
-    cout <<"Number of Items: " <<items.size() << "\n";
-
-
-    */
+    //Initialize Vending Machine Instance
     VendingStorage machine;
 
+    //Manually adding starting products
     Product item1("Coca cola", 5.5, 1, "Soda");
     Product item2("Pepsi", 7.0, 0, "Soda");
     Product item3("Nestle 1L", 4.5, 20, "Water");
@@ -382,37 +326,11 @@ int main()
 
     while(true){
         machine.operationMode();
-        if(machine.finish()){
+        if(machine.getFinishFlag()){
             break;
         }
     }
 
     return 0;
-
 }
-
-
-
-#define NUM_OF_ITEMS 24
-
-/*
-int main()
-{
-    Product items[NUM_OF_ITEMS]; //define array of products (items on the menu)
-    //initialize some pre-programmed items
-    string spiro = "Spiro Spathis";
-    string sod = "Soda";
-    for (int i = 0; i < NUM_OF_ITEMS; i++) items[i] = Product(); //initializes all items as empty
-    addItems(items,spiro,9.5,100,sod); //add 1st item which is spiro spathis
-    cout << "Choose the item from the menu: \n";
-    for (int i = 0; i < NUM_OF_ITEMS; i++){ //printing the menu
-    cout << i+1 << ". " << items[i].getName() << " (Price: " << items[i].getPrice()<< "$). \n";
-
-
-    }
-
-    return 0;
-}*/
-
-
 
