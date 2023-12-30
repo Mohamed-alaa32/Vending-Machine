@@ -47,16 +47,7 @@ Product::Product(string inputName,float inputPrice,int inputCount, string inputO
     price = inputPrice; //Sets price of product
     count = inputCount; //Sets number of products
     outlet = inputOutlet; //Sets outlet name of product
-
-    ///Transforms expiration date form from dd/mm/yyyy to tm pointer using ctime library
-    struct tm * date;
-    time_t current;
-    time(&current);
-    date = localtime(&current);
-    date -> tm_year = year - 1900;
-    date-> tm_mon = month - 1;
-    date-> tm_mday = day;
-    expirationDate = mktime(date);
+    setExpiry(day,month,year); //Sets expiration date of product
 }
 
 //GETTERS
