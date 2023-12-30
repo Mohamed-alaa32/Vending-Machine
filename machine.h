@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
+#include <conio.h>
 using namespace std;
 
 
@@ -30,15 +31,9 @@ private:
 
 public:
     //Constructor 1
-    Product(){
-        name = "EMPTY";
-        price = 0;
-        count = 0;
-        expirationDate = 0;
-        outlet = "None";
-    }
+    Product();
     //Constructor 2
-    Product(string inputName,float inputPrice,int inputCount, string inputOutlet, long expirationDateArray[3]);
+    Product(string inputName,float inputPrice,int inputCount, string inputOutlet, int day,int month,int year);
 
     //GETTERS
     string const getName(); //returns name of product
@@ -82,10 +77,12 @@ class VendingStorage{
 private:
     //Private attributes for VendingStorage class
     vector<Product> items;
-    int key = 123;
-    bool finishFlag = false;
+    int key;
+    bool finishFlag;
 
 public:
+    //Constructor
+    VendingStorage();
 
     //Used for manual adding of items before initializing the code
     void addProduct(Product item);

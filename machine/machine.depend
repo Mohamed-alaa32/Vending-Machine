@@ -1,20 +1,19 @@
 # depslib dependency file v1.0
-1703945579 source:d:\junior mechatronics\programming\project\vending-machine\machine\main.cpp
+1703954997 source:d:\junior mechatronics\programming\project\vending-machine\machine\main.cpp
 	<iostream>
-	<vector>
-	<conio.h>
 	<ctime>
 	"../machine.h"
 
-1703946604 source:d:\junior mechatronics\programming\project\vending-machine\machine.cpp
+1703957468 source:d:\junior mechatronics\programming\project\vending-machine\machine.cpp
 	<iostream>
 	<vector>
 	<conio.h>
 	"machine.h"
+	<ctime>
 
-1703947374 d:\junior mechatronics\programming\project\vending-machine\machine.h
+1703956152 d:\junior mechatronics\programming\project\vending-machine\machine.h
 	<iostream>
 	<vector>
-	<conio.h>
 	<ctime>
+	<conio.h>
 
