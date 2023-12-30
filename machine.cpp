@@ -87,6 +87,11 @@ using namespace std;
         cout << "\nThere are now " << count << " products of [" << name << "]. \n \n";
     }
 
+    bool Product::isExpired(){
+        long Now = time(NULL);
+        if (expirationDate > Now) return false;
+        else return true;
+    }
 
     /**
     * @brief this function is to used to add new item
@@ -340,8 +345,13 @@ int VendingStorage::SelectItemNumber(){
     else if (items[outletNumber-1].getCount()==0){
         cout << "Out of stock...\n";  //informs the user that this item is sold out
         }
+
+    else if(items[outletNumber-1].isExpired()){
+        cout << "Expired Product...\n";
     }
-    while(items[outletNumber-1].getCount() == 0 || (outletNumber >numberOfProducts() ) || (outletNumber <0));
+    }
+    while(items[outletNumber-1].getCount() == 0 || (outletNumber >numberOfProducts() )
+          || (outletNumber <0) || items[outletNumber-1].isExpired());
 
     return outletNumber;  //the user selected the required item
 }

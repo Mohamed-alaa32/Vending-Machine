@@ -46,6 +46,8 @@ public:
 
     void addItem();
 
+    bool isExpired();
+
     //Updating count after making a successful purchase
     void oneItemTaken();
 };
