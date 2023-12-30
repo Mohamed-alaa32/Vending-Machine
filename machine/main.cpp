@@ -20,7 +20,7 @@ int main()
     Product item1("Coca cola", 5.5, 1, "Soda" ,29,6,2025);
     Product item2("Pepsi", 7.0, 0, "Soda", 29,6,2025);
     Product item3("Nestle 1L", 4.5, 20, "Water" ,29,6,2025);
-    Product item4("Orange Juice", 8.0, 20, "Juice" ,29,6,2025);
+    Product item4("Orange Juice", 8.0, 20, "Juice" ,29,6,2023);
 
     machine.addProduct(item1);
     machine.addProduct(item2);
